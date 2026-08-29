@@ -1,5 +1,6 @@
 import { CheckCircle2 } from "lucide-react";
-import { stats } from "@/data/testimonials";
+import { getSiteConfig } from "@/lib/api";
+import { stats as fallbackStats } from "@/data/testimonials";
 
 const highlights = [
   "Centro cirúrgico com tecnologia de última geração",
@@ -8,7 +9,18 @@ const highlights = [
   "Programa de humanização e acompanhamento familiar",
 ];
 
-export function About() {
+async function loadStats() {
+  try {
+    const config = await getSiteConfig();
+    return config.stats ?? fallbackStats;
+  } catch {
+    return fallbackStats;
+  }
+}
+
+export async function About() {
+  const stats = await loadStats();
+
   return (
     <section className="bg-white py-16 lg:py-24" aria-labelledby="about-title">
       <div className="section-container">

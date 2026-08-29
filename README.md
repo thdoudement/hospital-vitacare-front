@@ -1,6 +1,6 @@
 # VitaCare Hospital — Frontend
 
-Site institucional de hospital desenvolvido com stack moderna para web. Projeto focado inicialmente no front-end, com dados mockados e formulários demonstrativos (sem backend).
+Site institucional do VitaCare Hospital com integração completa à API backend.
 
 ## Stack
 
@@ -12,93 +12,47 @@ Site institucional de hospital desenvolvido com stack moderna para web. Projeto 
 | **Tailwind CSS 4** | Estilização utilitária |
 | **Lucide React** | Ícones |
 
-## Estrutura do projeto
+## Funcionalidades
 
-```
-src/
-├── app/                  # Rotas (App Router)
-│   ├── page.tsx          # Homepage
-│   ├── servicos/         # Especialidades médicas
-│   ├── medicos/          # Corpo clínico
-│   ├── agendamento/      # Formulário de agendamento
-│   └── contato/          # Formulário de contato
-├── components/
-│   ├── layout/           # Header, Footer, Banner de emergência
-│   ├── home/             # Seções da homepage
-│   └── ui/               # Componentes reutilizáveis
-├── data/                 # Dados mockados (serviços, médicos, etc.)
-└── lib/                  # Utilitários e configuração do site
-```
-
-## Páginas
-
-- **/** — Homepage com hero, acesso rápido, serviços, sobre, médicos, depoimentos e contato
-- **/servicos** — Lista completa de especialidades
-- **/medicos** — Perfis do corpo clínico
-- **/agendamento** — Formulário de agendamento (UI only)
-- **/contato** — Informações e formulário de contato
+- Homepage com dados dinâmicos da API
+- Agendamento de consultas (formulário funcional)
+- Contato (formulário funcional)
+- Busca no site (especialidades e médicos)
+- Portal do paciente com login, cadastro e resultados de exames
+- Fallback para dados estáticos quando a API estiver offline
 
 ## Pré-requisitos
 
-- [Node.js](https://nodejs.org/) 18.18 ou superior (recomendado: LTS 22.x)
-- npm (incluso com Node.js)
-
-### Node instalado mas `npm` não é reconhecido?
-
-Se você acabou de instalar o Node.js e o terminal diz que `npm` não é reconhecido, o PATH ainda não foi recarregado. Faça um destes:
-
-1. **Feche e reabra o terminal** (ou reinicie o Cursor)
-2. **Ou** no PowerShell, recarregue o PATH manualmente:
-
-```powershell
-$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-node --version
-npm --version
-```
-
-Para confirmar que está tudo certo:
-
-```powershell
-node --version   # ex: v24.20.0
-npm --version    # ex: 11.19.0
-```
+- Node.js 22.x
+- Backend VitaCare rodando (ver `hospital-vitacare-back`)
 
 ## Como rodar
 
-```bash
-# Instalar dependências
+```powershell
+# 1. Instalar dependências
 npm install
 
-# Servidor de desenvolvimento
+# 2. Configurar variáveis de ambiente
+copy .env.example .env.local
+
+# 3. Iniciar (com backend em http://localhost:8080)
 npm run dev
 ```
 
 Acesse [http://localhost:3000](http://localhost:3000).
 
-```bash
-# Build de produção
-npm run build
+## Variáveis de ambiente
 
-# Rodar build de produção
-npm start
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8080/api
 ```
 
-## Referências de design
+## Portal do paciente (demo)
 
-A estrutura foi inspirada em boas práticas de sites hospitalares modernos:
+- **URL:** `/portal/login`
+- **E-mail:** `maria.silva@email.com`
+- **Senha:** `paciente123`
 
-- Banner de emergência sempre visível
-- CTAs de agendamento em destaque
-- Acesso rápido a serviços frequentes (exames, resultados, laboratório)
-- Diretório de especialidades e médicos
-- Depoimentos e indicadores de confiança
-- Layout mobile-first e acessível (WCAG)
+## Repositório backend
 
-## Próximos passos sugeridos
-
-- [ ] Integração com backend/API
-- [ ] Portal do paciente (login, resultados de exames)
-- [ ] Busca no site
-- [ ] Mapa interativo (Google Maps / OpenStreetMap)
-- [ ] CMS para gestão de conteúdo
-- [ ] Testes automatizados (Vitest + Testing Library)
+O backend fica em `../hospital-vitacare-back` (repositório separado).

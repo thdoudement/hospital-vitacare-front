@@ -1,8 +1,20 @@
 import { Star, Quote } from "lucide-react";
-import { testimonials } from "@/data/testimonials";
+import { getTestimonials } from "@/lib/api";
+import { testimonials as fallbackTestimonials } from "@/data/testimonials";
 import { Card } from "@/components/ui/Card";
+import type { ApiTestimonial } from "@/types/api";
 
-export function Testimonials() {
+async function loadTestimonials(): Promise<ApiTestimonial[]> {
+  try {
+    return await getTestimonials();
+  } catch {
+    return fallbackTestimonials;
+  }
+}
+
+export async function Testimonials() {
+  const testimonials = await loadTestimonials();
+
   return (
     <section
       className="bg-secondary-50 py-16 lg:py-24"
