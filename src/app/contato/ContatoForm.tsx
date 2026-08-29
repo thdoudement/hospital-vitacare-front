@@ -1,17 +1,37 @@
 "use client";
 
 import { useState } from "react";
-import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Send, AlertCircle } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
+import { createContact, ApiError } from "@/lib/api";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 
-export default function ContatoPage() {
+export default function ContatoForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+    setError(null);
+
+    const form = new FormData(e.currentTarget);
+
+    try {
+      await createContact({
+        name: String(form.get("name")),
+        email: String(form.get("email")),
+        subject: String(form.get("subject")),
+        message: String(form.get("message")),
+      });
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Erro ao enviar mensagem");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -97,6 +117,12 @@ export default function ContatoPage() {
                   <h2 className="text-xl font-semibold text-secondary-900">
                     Envie uma mensagem
                   </h2>
+                  {error && (
+                    <div className="mt-4 flex items-start gap-2 rounded-lg bg-red-50 p-4 text-sm text-red-700">
+                      <AlertCircle className="mt-0.5 size-4 shrink-0" />
+                      {error}
+                    </div>
+                  )}
                   <form onSubmit={handleSubmit} className="mt-6 space-y-5">
                     <div className="grid gap-5 sm:grid-cols-2">
                       <div>
@@ -148,8 +174,8 @@ export default function ContatoPage() {
                         className="mt-1.5 w-full rounded-lg border border-slate-300 px-4 py-2.5 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20"
                       />
                     </div>
-                    <Button type="submit" size="lg">
-                      Enviar mensagem
+                    <Button type="submit" size="lg" disabled={loading}>
+                      {loading ? "Enviando..." : "Enviar mensagem"}
                     </Button>
                   </form>
                 </Card>

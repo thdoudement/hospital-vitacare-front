@@ -29,7 +29,7 @@ export const quickAccessItems: QuickAccessItem[] = [
     title: "Resultados de exames",
     description: "Acesse seus laudos e imagens de forma segura",
     icon: FileText,
-    href: "#",
+    href: "/portal/login",
     accent: "bg-blue-100 text-blue-700",
   },
   {
