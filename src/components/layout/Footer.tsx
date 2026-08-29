@@ -85,13 +85,13 @@ export function Footer() {
             © {currentYear} {siteConfig.name}. Todos os direitos reservados.
           </p>
           <div className="flex gap-6 text-sm">
-            <Link href="#" className="hover:text-primary-400">
+            <Link href="/contato" className="hover:text-primary-400">
               Política de privacidade
             </Link>
-            <Link href="#" className="hover:text-primary-400">
+            <Link href="/contato" className="hover:text-primary-400">
               Termos de uso
             </Link>
-            <Link href="#" className="hover:text-primary-400">
+            <Link href="/contato" className="hover:text-primary-400">
               Acessibilidade
             </Link>
           </div>

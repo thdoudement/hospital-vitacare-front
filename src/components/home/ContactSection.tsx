@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
 import { Card } from "@/components/ui/Card";
@@ -49,11 +50,7 @@ export function ContactSection() {
                 <Button href="/agendamento" variant="secondary">
                   Agendar consulta
                 </Button>
-                <Button
-                  href="/contato"
-                  variant="outline"
-                  className="border-white/30 text-white hover:bg-white/10"
-                >
+                <Button href="/contato" variant="outline-light">
                   Fale conosco
                 </Button>
               </div>
@@ -62,9 +59,18 @@ export function ContactSection() {
             <div className="hidden bg-white/5 p-8 lg:block lg:p-12">
               <Card className="h-full border-0 bg-white/10 text-white backdrop-blur">
                 <h3 className="text-lg font-semibold">Como chegar</h3>
-                <div className="mt-4 flex aspect-video items-center justify-center rounded-xl bg-white/10">
-                  <MapPin className="size-12 text-primary-300/50" aria-hidden="true" />
-                  <span className="sr-only">Mapa de localização — em breve</span>
+                <div className="relative mt-4 aspect-video overflow-hidden rounded-xl">
+                  <Image
+                    src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=800&q=80"
+                    alt="Vista aérea de São Paulo — região do hospital"
+                    fill
+                    className="object-cover"
+                    sizes="400px"
+                  />
+                  <div className="absolute inset-0 bg-secondary-900/30" aria-hidden="true" />
+                  <div className="absolute bottom-3 left-3 rounded-lg bg-white/90 px-3 py-1.5 text-xs font-medium text-secondary-800 shadow">
+                    Jardim Paulista — SP
+                  </div>
                 </div>
                 <p className="mt-4 text-sm text-primary-100">
                   Estacionamento gratuito para pacientes e acompanhantes. Acesso

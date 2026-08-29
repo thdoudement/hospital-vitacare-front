@@ -1,7 +1,13 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-type ButtonVariant = "primary" | "secondary" | "outline" | "emergency" | "ghost";
+type ButtonVariant =
+  | "primary"
+  | "secondary"
+  | "outline"
+  | "outline-light"
+  | "emergency"
+  | "ghost";
 type ButtonSize = "sm" | "md" | "lg";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -17,7 +23,9 @@ const variantStyles: Record<ButtonVariant, string> = {
   secondary:
     "bg-secondary-800 text-white hover:bg-secondary-900 shadow-sm",
   outline:
-    "border-2 border-primary-600 text-primary-700 hover:bg-primary-50 bg-white",
+    "border-2 border-primary-600 bg-white text-primary-700 hover:bg-primary-50",
+  "outline-light":
+    "border-2 border-white/40 bg-white/10 text-white hover:border-white/60 hover:bg-white/20 backdrop-blur-sm",
   emergency:
     "bg-emergency text-white hover:bg-emergency-dark shadow-sm",
   ghost: "text-secondary-700 hover:bg-secondary-100",
