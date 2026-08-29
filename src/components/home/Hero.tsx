@@ -1,5 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Shield, Award, Users } from "lucide-react";
+import { ArrowRight, Shield, Award, Users, Activity, Clock } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
 export function Hero() {
@@ -39,7 +40,7 @@ export function Hero() {
                 Agendar consulta
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Button>
-              <Button href="/servicos" variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10">
+              <Button href="/servicos" variant="outline-light" size="lg">
                 Ver especialidades
               </Button>
             </div>
@@ -56,18 +57,68 @@ export function Hero() {
             </div>
           </div>
 
+          <div className="relative mt-10 block overflow-hidden rounded-2xl lg:hidden">
+            <div className="relative aspect-[16/9]">
+              <Image
+                src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=900&q=80"
+                alt="Ambiente hospitalar moderno do VitaCare"
+                fill
+                className="object-cover"
+                sizes="100vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-secondary-900/90 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4 rounded-xl bg-white/10 p-4 backdrop-blur-md ring-1 ring-white/20">
+                <p className="text-sm font-medium text-primary-200">Pronto-socorro 24h</p>
+                <p className="text-lg font-bold">Emergência com equipe especializada</p>
+              </div>
+            </div>
+          </div>
+
           <div className="relative hidden lg:block">
-            <div className="aspect-[4/5] overflow-hidden rounded-3xl bg-gradient-to-br from-primary-600/30 to-secondary-700/50 shadow-2xl ring-1 ring-white/10">
-              <div className="flex h-full flex-col justify-end p-8">
-                <div className="rounded-2xl bg-white/10 p-6 backdrop-blur-md">
-                  <p className="text-sm font-medium text-primary-200">Pronto-socorro</p>
-                  <p className="mt-1 text-2xl font-bold">Atendimento 24 horas</p>
+            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl shadow-2xl ring-1 ring-white/10">
+              <Image
+                src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=900&q=80"
+                alt="Corredor moderno de hospital com equipe médica"
+                fill
+                priority
+                className="object-cover"
+                sizes="(min-width: 1024px) 480px, 100vw"
+              />
+              <div
+                className="absolute inset-0 bg-gradient-to-t from-secondary-900/95 via-secondary-900/40 to-secondary-900/20"
+                aria-hidden="true"
+              />
+
+              <div className="absolute left-6 top-6 flex flex-col gap-3">
+                <div className="rounded-xl bg-white/15 px-4 py-3 backdrop-blur-md ring-1 ring-white/20">
+                  <div className="flex items-center gap-2 text-primary-200">
+                    <Activity className="size-4" aria-hidden="true" />
+                    <span className="text-xs font-semibold uppercase tracking-wide">
+                      Emergência
+                    </span>
+                  </div>
+                  <p className="mt-1 text-lg font-bold">24 horas</p>
+                </div>
+                <div className="rounded-xl bg-white/15 px-4 py-3 backdrop-blur-md ring-1 ring-white/20">
+                  <p className="text-2xl font-bold">180</p>
+                  <p className="text-xs text-slate-300">Leitos hospitalares</p>
+                </div>
+              </div>
+
+              <div className="absolute bottom-0 left-0 right-0 p-8">
+                <div className="rounded-2xl bg-white/10 p-6 backdrop-blur-md ring-1 ring-white/20">
+                  <div className="flex items-center gap-2 text-primary-200">
+                    <Clock className="size-4" aria-hidden="true" />
+                    <p className="text-sm font-medium">Pronto-socorro</p>
+                  </div>
+                  <p className="mt-1 text-2xl font-bold">Atendimento imediato</p>
                   <p className="mt-2 text-sm text-slate-300">
-                    Equipe multidisciplinar pronta para urgências e emergências.
+                    Equipe multidisciplinar pronta para urgências e emergências, com
+                    UTI adulto, pediátrica e neonatal.
                   </p>
                   <Link
                     href="/contato"
-                    className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary-300 hover:text-white"
+                    className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary-300 transition-colors hover:text-white"
                   >
                     Como chegar
                     <ArrowRight className="size-4" aria-hidden="true" />

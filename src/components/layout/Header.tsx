@@ -72,15 +72,25 @@ export function Header() {
               </Button>
             </div>
 
+          <div className="flex items-center gap-2 lg:hidden">
             <button
               type="button"
-              className="rounded-lg p-2 text-secondary-700 lg:hidden"
+              aria-label="Buscar no site"
+              onClick={() => setSearchOpen(true)}
+              className="rounded-lg p-2 text-secondary-700"
+            >
+              <Search className="size-6" />
+            </button>
+            <button
+              type="button"
+              className="rounded-lg p-2 text-secondary-700"
               aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen(!mobileOpen)}
             >
               {mobileOpen ? <X className="size-6" /> : <Menu className="size-6" />}
             </button>
+          </div>
           </div>
         </div>
 
