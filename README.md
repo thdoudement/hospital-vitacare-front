@@ -2,6 +2,8 @@
 
 Site institucional do VitaCare Hospital com integração completa à API backend.
 
+![Homepage do VitaCare Hospital](./public/screenshots/homepage.png)
+
 ## Stack
 
 | Tecnologia | Uso |
@@ -24,7 +26,7 @@ Site institucional do VitaCare Hospital com integração completa à API backend
 ## Pré-requisitos
 
 - Node.js 22.x
-- Backend VitaCare rodando (ver `hospital-vitacare-back`)
+- Backend VitaCare rodando (ver [hospital-vitacare-back](https://github.com/thdoudement/hospital-vitacare-back))
 
 ## Como rodar
 
@@ -55,4 +57,4 @@ NEXT_PUBLIC_API_URL=http://localhost:8080/api
 
 ## Repositório backend
 
-O backend fica em `../hospital-vitacare-back` (repositório separado).
+API REST em repositório separado: [hospital-vitacare-back](https://github.com/thdoudement/hospital-vitacare-back)
