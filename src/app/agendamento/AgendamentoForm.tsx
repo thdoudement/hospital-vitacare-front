@@ -1,17 +1,44 @@
 "use client";
 
 import { useState } from "react";
-import { Calendar, User, Phone, Mail, FileText } from "lucide-react";
-import { services } from "@/data/services";
+import { Calendar, User, Phone, Mail, FileText, AlertCircle } from "lucide-react";
+import { createAppointment } from "@/lib/api";
+import { ApiError } from "@/lib/api";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import type { ApiSpecialty } from "@/types/api";
 
-export default function AgendamentoForm() {
+interface AgendamentoFormProps {
+  specialties: ApiSpecialty[];
+}
+
+export default function AgendamentoForm({ specialties }: AgendamentoFormProps) {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+    setError(null);
+
+    const form = new FormData(e.currentTarget);
+
+    try {
+      await createAppointment({
+        name: String(form.get("name")),
+        phone: String(form.get("phone")),
+        email: String(form.get("email")),
+        specialty: String(form.get("specialty")),
+        date: String(form.get("date")),
+        notes: String(form.get("notes") || "") || undefined,
+      });
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Erro ao enviar solicitação");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -21,7 +48,7 @@ export default function AgendamentoForm() {
           <h1 className="text-4xl font-bold sm:text-5xl">Agendar consulta</h1>
           <p className="mt-4 max-w-2xl text-lg text-slate-300">
             Preencha o formulário abaixo e nossa equipe entrará em contato para
-            confirmar seu horário. (Interface demonstrativa — sem backend ainda.)
+            confirmar seu horário.
           </p>
         </div>
       </section>
@@ -53,6 +80,12 @@ export default function AgendamentoForm() {
               </Card>
             ) : (
               <Card>
+                {error && (
+                  <div className="mb-6 flex items-start gap-2 rounded-lg bg-red-50 p-4 text-sm text-red-700">
+                    <AlertCircle className="mt-0.5 size-4 shrink-0" />
+                    {error}
+                  </div>
+                )}
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-secondary-700">
@@ -129,7 +162,7 @@ export default function AgendamentoForm() {
                       className="mt-1.5 w-full rounded-lg border border-slate-300 px-4 py-2.5 text-secondary-900 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20"
                     >
                       <option value="">Selecione uma especialidade</option>
-                      {services.map((s) => (
+                      {specialties.map((s) => (
                         <option key={s.id} value={s.slug}>
                           {s.title}
                         </option>
@@ -151,6 +184,7 @@ export default function AgendamentoForm() {
                         name="date"
                         type="date"
                         required
+                        min={new Date().toISOString().slice(0, 10)}
                         className="w-full rounded-lg border border-slate-300 py-2.5 pl-10 pr-4 text-secondary-900 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20"
                       />
                     </div>
@@ -175,8 +209,8 @@ export default function AgendamentoForm() {
                     </div>
                   </div>
 
-                  <Button type="submit" size="lg" className="w-full">
-                    Solicitar agendamento
+                  <Button type="submit" size="lg" className="w-full" disabled={loading}>
+                    {loading ? "Enviando..." : "Solicitar agendamento"}
                   </Button>
                 </form>
               </Card>

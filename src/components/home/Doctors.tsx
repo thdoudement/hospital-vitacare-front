@@ -1,9 +1,28 @@
 import { ArrowRight } from "lucide-react";
-import { doctors } from "@/data/doctors";
+import { getDoctors } from "@/lib/api";
+import { getDoctorColor, getDoctorInitials } from "@/lib/doctor-utils";
+import { doctors as fallbackDoctors } from "@/data/doctors";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import type { ApiDoctor } from "@/types/api";
 
-export function Doctors() {
+async function loadDoctors(): Promise<ApiDoctor[]> {
+  try {
+    return await getDoctors();
+  } catch {
+    return fallbackDoctors.map(({ id, name, specialty, crm, bio }) => ({
+      id,
+      name,
+      specialty,
+      crm,
+      bio,
+    }));
+  }
+}
+
+export async function Doctors() {
+  const doctors = await loadDoctors();
+
   return (
     <section className="py-16 lg:py-24" aria-labelledby="doctors-title">
       <div className="section-container">
@@ -21,22 +40,26 @@ export function Doctors() {
         </div>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {doctors.map((doctor) => (
-            <Card key={doctor.id} hover className="text-center">
-              <div
-                className={`mx-auto flex size-20 items-center justify-center rounded-full text-2xl font-bold ${doctor.color}`}
-                aria-hidden="true"
-              >
-                {doctor.initials}
-              </div>
-              <h3 className="mt-4 font-semibold text-secondary-900">{doctor.name}</h3>
-              <p className="text-sm font-medium text-primary-600">{doctor.specialty}</p>
-              <p className="mt-1 text-xs text-secondary-500">{doctor.crm}</p>
-              <p className="mt-3 text-sm leading-relaxed text-secondary-600">
-                {doctor.bio}
-              </p>
-            </Card>
-          ))}
+          {doctors.slice(0, 4).map((doctor) => {
+            const color = getDoctorColor(doctor.id);
+            const initials = getDoctorInitials(doctor.name);
+            return (
+              <Card key={doctor.id} hover className="text-center">
+                <div
+                  className={`mx-auto flex size-20 items-center justify-center rounded-full text-2xl font-bold ${color}`}
+                  aria-hidden="true"
+                >
+                  {initials}
+                </div>
+                <h3 className="mt-4 font-semibold text-secondary-900">{doctor.name}</h3>
+                <p className="text-sm font-medium text-primary-600">{doctor.specialty}</p>
+                <p className="mt-1 text-xs text-secondary-500">{doctor.crm}</p>
+                <p className="mt-3 text-sm leading-relaxed text-secondary-600">
+                  {doctor.bio}
+                </p>
+              </Card>
+            );
+          })}
         </div>
 
         <div className="mt-10 text-center">
